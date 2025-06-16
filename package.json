@@ -1,0 +1,42 @@
+{
+  "name": "spraakbestuur-windows",
+  "version": "0.0.2",
+  "description": "Spreek tegen je Windows pc",
+  "author": "LarsZ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.LarsZ.spraakbestuur-windows",
+    "productName": "SpraakBestuur Windows",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "KaasigeKaasfondue",
+        "repo": "spraakbestuur-windows"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": true
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SpraakBestuur"
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  },
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "26.0.12"
+  }
+}
