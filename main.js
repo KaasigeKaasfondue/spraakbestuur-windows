@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
 
 let win;
 
@@ -16,27 +17,71 @@ app.whenReady().then(() => {
   createWindow();
 
   if (app.isPackaged) {
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdates();
 
     autoUpdater.on('checking-for-update', () => {
-      console.log('Zoekt naar updates...');
+      log.info('Zoekt naar updates...');
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Status',
+        message: 'Zoekt naar updates...',
+        detail: `Huidige versie: ${app.getVersion()}`,
+      });
     });
 
-    autoUpdater.on('update-available', () => {
-      console.log('Update beschikbaar');
+    autoUpdater.on('update-available', (info) => {
+      log.info('Update beschikbaar:', info);
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Beschikbaar',
+        message: 'Er is een nieuwe update gevonden!',
+        detail: `Huidige versie: ${app.getVersion()}\nNieuwe versie: ${info.version}\n\nRelease-notes:\n${info.releaseNotes || 'Geen release-notes beschikbaar.'}`,
+        buttons: ['Download & Installeer', 'Annuleren']
+      }).then(({ response }) => {
+        if (response === 0) {
+          autoUpdater.downloadUpdate();
+        }
+      });
     });
 
-    autoUpdater.on('update-not-available', () => {
-      console.log('Geen updates beschikbaar');
+    autoUpdater.on('update-not-available', (info) => {
+      log.info('Geen updates beschikbaar:', info);
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'Geen Update',
+        message: 'Je hebt de nieuwste versie.',
+        detail: `Huidige versie: ${app.getVersion()}`,
+      });
     });
 
     autoUpdater.on('error', (err) => {
-      console.error('Update fout:', err);
+      log.error('Update fout:', err);
+      dialog.showMessageBox({
+        type: 'error',
+        title: 'Update Fout',
+        message: 'Er is een fout opgetreden tijdens het updaten.',
+        detail: `${err == null ? 'Onbekende fout' : (err.stack || err).toString()}`,
+      });
     });
 
-    autoUpdater.on('update-downloaded', () => {
-      console.log('Update gedownload, herstart de app');
-      autoUpdater.quitAndInstall();
+    autoUpdater.on('download-progress', (progressObj) => {
+      let log_message = `Downloaded ${Math.floor(progressObj.percent)}% (${Math.floor(progressObj.transferred / 1024)} KB of ${Math.floor(progressObj.total/1024)} KB)`;
+      log.info(log_message);
+    });
+
+    autoUpdater.on('update-downloaded', (info) => {
+      log.info('Update gedownload:', info);
+      dialog.showMessageBox({
+        type: 'question',
+        title: 'Herstart voor Installatie',
+        message: 'Update gedownload!',
+        detail: `Huidige versie: ${app.getVersion()}\nNieuwe versie: ${info.version}\n\nWil je nu herstarten om de update te installeren?`,
+        buttons: ['Herstart Nu', 'Later']
+      }).then(({ response }) => {
+        if (response === 0) {
+          autoUpdater.quitAndInstall();
+        }
+      });
     });
   }
 });
