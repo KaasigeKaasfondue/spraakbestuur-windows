@@ -33,7 +33,9 @@
     }
   },
   "dependencies": {
-    "electron-updater": "^6.6.2"
+    "@types/log": "^6.3.3",
+    "electron-updater": "^6.6.2",
+    "log": "^6.3.2"
   },
   "devDependencies": {
     "electron": "^36.4.0",
