@@ -1,8 +1,8 @@
-const { app, BrowserWindow, dialog, Notification, ipcMain } = require('electron');
-const { autoUpdater } = require('electron-updater');
+const { app, BrowserWindow, dialog, Notification, ipcMain } = require('electron')
+const { autoUpdater } = require('electron-updater')
+const { startRecognition, stopRecognition } = require('./speech')
 
-let win;
-
+let win
 function createWindow() {
   win = new BrowserWindow({
     width: 800,
@@ -14,31 +14,27 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     }
-  });
-
-  win.removeMenu();
-  win.loadFile('index.html');
+  })
+  win.removeMenu()
+  win.loadFile('index.html')
 }
-
 app.whenReady().then(() => {
-  createWindow();
-
-  app.setLoginItemSettings({ openAtLogin: true });
-
+  createWindow()
+  app.setLoginItemSettings({ openAtLogin: true })
+  ipcMain.on('start-transcriptie', () => startRecognition(win))
+  ipcMain.on('stop-transcriptie', () => stopRecognition())
   if (app.isPackaged) {
-    autoUpdater.autoDownload = false;
-    autoUpdater.checkForUpdates();
-
+    autoUpdater.autoDownload = false
+    autoUpdater.checkForUpdates()
     autoUpdater.on('checking-for-update', () => {
       dialog.showMessageBox({
         type: 'info',
         title: 'Update Status',
         message: 'Zoekt naar updates...',
         detail: `Huidige versie: ${app.getVersion()}`
-      });
-    });
-
-    autoUpdater.on('update-available', (info) => {
+      })
+    })
+    autoUpdater.on('update-available', info => {
       dialog.showMessageBox({
         type: 'info',
         title: 'Update Beschikbaar',
@@ -47,39 +43,35 @@ app.whenReady().then(() => {
         buttons: ['Download en Installeer', 'Annuleren']
       }).then(({ response }) => {
         if (response === 0) {
-          autoUpdater.downloadUpdate();
-          new Notification({ title: 'Download gestart', body: 'De update wordt nu gedownload.' }).show();
+          autoUpdater.downloadUpdate()
+          new Notification({ title: 'Download gestart', body: 'De update wordt nu gedownload.' }).show()
         }
-      });
-    });
-
+      })
+    })
     autoUpdater.on('update-not-available', () => {
       dialog.showMessageBox({
         type: 'info',
         title: 'Geen Update',
         message: 'Je hebt de nieuwste versie.',
         detail: `Huidige versie: ${app.getVersion()}`
-      });
-    });
-
-    autoUpdater.on('error', (err) => {
+      })
+    })
+    autoUpdater.on('error', err => {
       dialog.showMessageBox({
         type: 'error',
         title: 'Update Fout',
         message: 'Er is een fout opgetreden tijdens het updaten.',
         detail: `${err?.stack || err || 'Onbekende fout'}`
-      });
-    });
-
-    autoUpdater.on('download-progress', (progressObj) => {
-      const percent = Math.floor(progressObj.percent);
-      win.setProgressBar(progressObj.percent / 100);
-      win.webContents.send('download-progress', percent);
-      new Notification({ title: 'Download voortgang', body: `${percent}% gedownload` }).show();
-    });
-
-    autoUpdater.on('update-downloaded', (info) => {
-      win.setProgressBar(-1);
+      })
+    })
+    autoUpdater.on('download-progress', progressObj => {
+      const percent = Math.floor(progressObj.percent)
+      win.setProgressBar(progressObj.percent / 100)
+      win.webContents.send('download-progress', percent)
+      new Notification({ title: 'Download voortgang', body: `${percent}% gedownload` }).show()
+    })
+    autoUpdater.on('update-downloaded', info => {
+      win.setProgressBar(-1)
       dialog.showMessageBox({
         type: 'question',
         title: 'Herstart voor Installatie',
@@ -88,9 +80,9 @@ app.whenReady().then(() => {
         buttons: ['Herstart Nu', 'Later']
       }).then(({ response }) => {
         if (response === 0) {
-          autoUpdater.quitAndInstall();
+          autoUpdater.quitAndInstall()
         }
-      });
-    });
+      })
+    })
   }
-});
+})

@@ -1,6 +1,6 @@
 {
   "name": "spraakbestuur-windows",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Spreek tegen je Windows pc",
   "author": "LarsZ",
   "main": "main.js",

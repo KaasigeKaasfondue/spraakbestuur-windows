@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Spraakbestuur voor Windows</title>
+  <title>Live Transcriptie</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="update-container" style="display:none; padding:16px;">
-    <label for="progressBar">Update downloaden: </label>
-    <progress id="progressBar" value="0" max="100" style="width:100%;"></progress>
-    <span id="progressText">0%</span>
+  <div class="container">
+    <h1>Live Transcriptie</h1>
+    <button id="start-btn">Start Transcriptie</button>
+    <p id="status">Klik op de knop om te beginnen</p>
+    <div id="transcript"></div>
+    <div id="update-container">
+      <label for="progressBar">Update downloaden:</label>
+      <progress id="progressBar" value="0" max="100"></progress>
+      <span id="progressText">0%</span>
+    </div>
   </div>
   <script src="renderer.js"></script>
 </body>
