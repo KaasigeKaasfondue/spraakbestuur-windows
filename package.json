@@ -1,6 +1,6 @@
 {
   "name": "spraakbestuur-windows",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Spreek tegen je Windows pc",
   "author": "LarsZ",
   "main": "main.js",
@@ -29,7 +29,11 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "SpraakBestuur"
+      "shortcutName": "SpraakBestuur",
+      "installerIcon": "media/random.ico",
+      "uninstallerIcon": "media/random.ico",
+      "installerHeaderIcon": "media/random.ico",
+      "include": "build/installer.nsh"
     }
   },
   "dependencies": {

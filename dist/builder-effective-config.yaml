@@ -18,5 +18,9 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: SpraakBestuur
+  installerIcon: media/random.ico
+  uninstallerIcon: media/random.ico
+  installerHeaderIcon: media/random.ico
+  include: build/installer.nsh
 files: []
 electronVersion: 36.4.0
