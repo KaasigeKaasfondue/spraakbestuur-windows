@@ -1,8 +1,8 @@
-version: 0.0.6
+version: 0.0.7
 files:
-  - url: SpraakBestuur-Windows-Setup-0.0.6.exe
-    sha512: cDJByrYtwQ3OTFefBwD6Qkida7q4ZRK8iL5gu84iEjj83mYH5Yvb/uR/Fl+jNNgpgMY+H6Qokt8LbqHMLx6ZRw==
-    size: 86582083
-path: SpraakBestuur-Windows-Setup-0.0.6.exe
-sha512: cDJByrYtwQ3OTFefBwD6Qkida7q4ZRK8iL5gu84iEjj83mYH5Yvb/uR/Fl+jNNgpgMY+H6Qokt8LbqHMLx6ZRw==
-releaseDate: '2025-06-17T07:12:32.970Z'
+  - url: SpraakBestuur-Windows-Setup-0.0.7.exe
+    sha512: jO5NffaCjgQzHYwep+Ys7n2ENUL86CMZ5lOONbnfWUhG/pKvFAtd7B7xKTEQT+QPo8KFltKwyrele9jbfH4MTQ==
+    size: 86581980
+path: SpraakBestuur-Windows-Setup-0.0.7.exe
+sha512: jO5NffaCjgQzHYwep+Ys7n2ENUL86CMZ5lOONbnfWUhG/pKvFAtd7B7xKTEQT+QPo8KFltKwyrele9jbfH4MTQ==
+releaseDate: '2025-06-17T07:23:03.044Z'
