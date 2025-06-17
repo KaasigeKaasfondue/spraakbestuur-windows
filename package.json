@@ -1,6 +1,6 @@
 {
   "name": "spraakbestuur-windows",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Spreek tegen je Windows pc",
   "author": "LarsZ",
   "main": "main.js",
@@ -20,7 +20,8 @@
     ],
     "win": {
       "target": "nsis",
-      "signAndEditExecutable": true
+      "signAndEditExecutable": true,
+      "icon": "media/random.ico"
     },
     "nsis": {
       "oneClick": false,
