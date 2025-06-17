@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, Notification } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 let win;
@@ -7,7 +7,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: true,
+    frame: false,
     titleBarOverlay: true,
     autoHideMenuBar: true
   });
@@ -18,6 +18,10 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+
+  app.setLoginItemSettings({
+    openAtLogin: true
+  });
 
   if (app.isPackaged) {
     autoUpdater.autoDownload = false;
@@ -42,6 +46,7 @@ app.whenReady().then(() => {
       }).then(({ response }) => {
         if (response === 0) {
           autoUpdater.downloadUpdate();
+          new Notification({ title: 'Download gestart', body: 'De update wordt nu gedownload.' }).show();
         }
       });
     });
@@ -65,13 +70,11 @@ app.whenReady().then(() => {
     });
 
     autoUpdater.on('download-progress', (progressObj) => {
-      const fraction = progressObj.percent / 100;
-      win.setProgressBar(fraction);
+      const percent = Math.floor(progressObj.percent);
+      new Notification({ title: 'Download voortgang', body: `${percent}% gedownload` }).show();
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-      win.setProgressBar(-1);
-
       dialog.showMessageBox({
         type: 'question',
         title: 'Herstart voor Installatie',
