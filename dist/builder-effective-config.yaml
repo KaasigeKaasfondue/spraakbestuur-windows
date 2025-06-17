@@ -2,7 +2,7 @@ directories:
   output: dist
   buildResources: build
 appId: com.LarsZ.spraakbestuur-windows
-productName: SpraakBestuur Windows
+productName: SpraakBestuur-Windows
 publish:
   - provider: github
     owner: KaasigeKaasfondue

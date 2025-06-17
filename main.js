@@ -28,17 +28,23 @@ app.whenReady().then(() => {
     });
 
     autoUpdater.on('update-available', (info) => {
-      dialog.showMessageBox({
-        type: 'info',
-        title: 'Update Beschikbaar',
-        message: 'Er is een nieuwe update gevonden!',
-        detail: `Huidige versie: ${app.getVersion()}\nNieuwe versie: ${info.version}\n\nRelease-notes:\n${info.releaseNotes || 'Geen release-notes beschikbaar.'}`,
-        buttons: ['Download & Installeer', 'Annuleren']
-      }).then(({ response }) => {
-        if (response === 0) {
-          autoUpdater.downloadUpdate();
-        }
-      });
+      dialog
+        .showMessageBox({
+          type: "info",
+          title: "Update Beschikbaar",
+          message: "Er is een nieuwe update gevonden!",
+          detail: `Huidige versie: ${app.getVersion()}\nNieuwe versie: ${
+            info.version
+          }\n\nRelease-notes:\n${
+            info.releaseNotes || "Geen release-notes beschikbaar."
+          }`,
+          buttons: ["Download en Installeer", "Annuleren"],
+        })
+        .then(({ response }) => {
+          if (response === 0) {
+            autoUpdater.downloadUpdate();
+          }
+        });
     });
 
     autoUpdater.on('update-not-available', (info) => {

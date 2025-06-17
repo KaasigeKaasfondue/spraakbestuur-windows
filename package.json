@@ -1,6 +1,6 @@
 {
   "name": "spraakbestuur-windows",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Spreek tegen je Windows pc",
   "author": "LarsZ",
   "main": "main.js",
@@ -10,7 +10,7 @@
   },
   "build": {
     "appId": "com.LarsZ.spraakbestuur-windows",
-    "productName": "SpraakBestuur Windows",
+    "productName": "SpraakBestuur-Windows",
     "publish": [
       {
         "provider": "github",
