@@ -1,6 +1,5 @@
 const { app, BrowserWindow, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
-const path = require('path');
 
 let win;
 
@@ -8,10 +7,12 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,
-    titleBarOverlay: true
+    frame: true,
+    titleBarOverlay: true,
+    autoHideMenuBar: true
   });
 
+  win.removeMenu();
   win.loadFile('index.html');
 }
 
@@ -19,9 +20,8 @@ app.whenReady().then(() => {
   createWindow();
 
   if (app.isPackaged) {
-    autoUpdater.autoDownload = false;
-
-    autoUpdater.checkForUpdates();
+    autoUpdater.autoDownload = false;  // Geen automatische download
+    autoUpdater.checkForUpdates();    // Check alleen bij opstarten
 
     autoUpdater.on('checking-for-update', () => {
       dialog.showMessageBox({
@@ -60,17 +60,17 @@ app.whenReady().then(() => {
         type: 'error',
         title: 'Update Fout',
         message: 'Er is een fout opgetreden tijdens het updaten.',
-        detail: `${err == null ? 'Onbekende fout' : (err.stack || err).toString()}`
+        detail: `${err?.stack || err || 'Onbekende fout'}`
       });
     });
 
     autoUpdater.on('download-progress', (progressObj) => {
       const fraction = progressObj.percent / 100;
-      win.setProgressBar(fraction);
+      win.setProgressBar(fraction);  // Toon voortgang in taakbalk
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-      win.setProgressBar(-1);
+      win.setProgressBar(-1);  // Reset voortgangsbalk
 
       dialog.showMessageBox({
         type: 'question',
