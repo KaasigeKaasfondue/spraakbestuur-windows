@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head><title>Updater Test</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Mijn App</title>
+</head>
 <body>
-  <h1>Versie 0.1.1</h1>
+  <div id="update-container" style="display:none; padding:16px;">
+    <label for="progressBar">Update downloaden: </label>
+    <progress id="progressBar" value="0" max="100" style="width:100%;"></progress>
+    <span id="progressText">0%</span>
+  </div>
+  <script src="renderer.js"></script>
 </body>
 </html>
