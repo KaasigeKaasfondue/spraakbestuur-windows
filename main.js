@@ -1,6 +1,5 @@
 const { app, BrowserWindow, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
-const log = require('electron-log');
 
 let win;
 
@@ -20,7 +19,6 @@ app.whenReady().then(() => {
     autoUpdater.checkForUpdates();
 
     autoUpdater.on('checking-for-update', () => {
-      log.info('Zoekt naar updates...');
       dialog.showMessageBox({
         type: 'info',
         title: 'Update Status',
@@ -30,7 +28,6 @@ app.whenReady().then(() => {
     });
 
     autoUpdater.on('update-available', (info) => {
-      log.info('Update beschikbaar:', info);
       dialog.showMessageBox({
         type: 'info',
         title: 'Update Beschikbaar',
@@ -45,7 +42,6 @@ app.whenReady().then(() => {
     });
 
     autoUpdater.on('update-not-available', (info) => {
-      log.info('Geen updates beschikbaar:', info);
       dialog.showMessageBox({
         type: 'info',
         title: 'Geen Update',
@@ -55,7 +51,6 @@ app.whenReady().then(() => {
     });
 
     autoUpdater.on('error', (err) => {
-      log.error('Update fout:', err);
       dialog.showMessageBox({
         type: 'error',
         title: 'Update Fout',
@@ -66,11 +61,9 @@ app.whenReady().then(() => {
 
     autoUpdater.on('download-progress', (progressObj) => {
       let log_message = `Downloaded ${Math.floor(progressObj.percent)}% (${Math.floor(progressObj.transferred / 1024)} KB of ${Math.floor(progressObj.total/1024)} KB)`;
-      log.info(log_message);
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-      log.info('Update gedownload:', info);
       dialog.showMessageBox({
         type: 'question',
         title: 'Herstart voor Installatie',
