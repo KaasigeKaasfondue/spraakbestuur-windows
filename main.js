@@ -20,8 +20,8 @@ app.whenReady().then(() => {
   createWindow();
 
   if (app.isPackaged) {
-    autoUpdater.autoDownload = false;  // Geen automatische download
-    autoUpdater.checkForUpdates();    // Check alleen bij opstarten
+    autoUpdater.autoDownload = false;
+    autoUpdater.checkForUpdates();
 
     autoUpdater.on('checking-for-update', () => {
       dialog.showMessageBox({
@@ -66,11 +66,11 @@ app.whenReady().then(() => {
 
     autoUpdater.on('download-progress', (progressObj) => {
       const fraction = progressObj.percent / 100;
-      win.setProgressBar(fraction);  // Toon voortgang in taakbalk
+      win.setProgressBar(fraction);
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-      win.setProgressBar(-1);  // Reset voortgangsbalk
+      win.setProgressBar(-1);
 
       dialog.showMessageBox({
         type: 'question',
