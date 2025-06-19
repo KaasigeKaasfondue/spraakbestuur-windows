@@ -1,27 +1,19 @@
 {
-  "name": "spraakbestuur-windows",
-  "version": "0.1.3",
-  "description": "Spreek tegen je Windows pc",
-  "author": "LarsZ",
+  "name": "nederlandse-spraak-app",
+  "version": "0.3.0",
+  "description": "Nederlandse spraakgestuurde applicatie voor het openen van apps",
+  "author": "Manus",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "com.LarsZ.spraakbestuur-windows",
-    "productName": "SpraakBestuur-Windows",
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "KaasigeKaasfondue",
-        "repo": "spraakbestuur-windows"
-      }
-    ],
+    "appId": "com.manus.nederlandse-spraak-app",
+    "productName": "Nederlandse Spraak App",
     "win": {
       "target": "nsis",
-      "signAndEditExecutable": true,
-      "icon": "media/random.ico"
+      "icon": "media/microphone.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -30,18 +22,14 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "SpraakBestuur",
-      "installerIcon": "media/random.ico",
-      "uninstallerIcon": "media/random.ico",
-      "installerHeaderIcon": "media/random.ico",
-      "include": "build/installer.nsh"
+      "shortcutName": "Nederlandse Spraak App",
+      "installerIcon": "media/microphone.ico",
+      "uninstallerIcon": "media/microphone.ico",
+      "installerHeaderIcon": "media/microphone.ico"
     }
   },
-  "dependencies": {
-    "electron-updater": "^6.6.2"
-  },
   "devDependencies": {
-    "electron": "^36.4.0",
-    "electron-builder": "26.0.12"
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
   }
 }

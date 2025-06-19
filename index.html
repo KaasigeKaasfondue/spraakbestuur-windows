@@ -2,21 +2,61 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Live Transcriptie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nederlandse Spraak App</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Live Transcriptie</h1>
-    <button id="start-btn">Start Transcriptie</button>
-    <p id="status">Klik op de knop om te beginnen</p>
-    <div id="transcript"></div>
-    <div id="update-container">
-      <label for="progressBar">Update downloaden:</label>
-      <progress id="progressBar" value="0" max="100"></progress>
-      <span id="progressText">0%</span>
+    <div class="header">
+      <h1>Spraak Besturing</h1>
+      <p class="subtitle">Zeg de naam van een app om deze te openen</p>
+    </div>
+    
+    <div class="status-area">
+      <div id="status" class="status">Klik op de microfoon om te beginnen</div>
+      <div id="transcript" class="transcript"></div>
+    </div>
+    
+    <div class="recent-commands">
+      <h3>Recente commando's:</h3>
+      <div id="recent-list" class="recent-list"></div>
+    </div>
+    
+    <div class="suggestions">
+      <h3>Voorbeelden:</h3>
+      <div class="suggestion-grid">
+        <span class="suggestion">Teksteditor</span>
+        <span class="suggestion">Rekenmachine</span>
+        <span class="suggestion">Firefox</span>
+        <span class="suggestion">Bestandsbeheer</span>
+        <span class="suggestion">Terminal</span>
+        <span class="suggestion">Instellingen</span>
+      </div>
+    </div>
+    
+    <div class="microphone-container">
+      <button id="mic-button" class="mic-button">
+        <img src="media/microphone-small.png" alt="Microfoon" class="mic-icon">
+      </button>
+      <div class="mic-status" id="mic-status">Niet actief</div>
     </div>
   </div>
+
+  <div id="error-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>App niet gevonden</h3>
+      <p id="error-message"></p>
+      <p>Ik hoorde: "<span id="heard-text"></span>"</p>
+      <input type="text" id="manual-input" placeholder="Typ de juiste app naam...">
+      <div class="modal-buttons">
+        <button id="try-manual" class="btn-primary">Probeer</button>
+        <button id="cancel-modal" class="btn-secondary">Annuleren</button>
+      </div>
+    </div>
+  </div>
+
   <script src="renderer.js"></script>
 </body>
 </html>
+
