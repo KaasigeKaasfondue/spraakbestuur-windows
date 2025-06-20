@@ -41,13 +41,13 @@ app.on('window-all-closed', () => {
 ipcMain.handle('open-app', async (event, appName) => {
   return new Promise((resolve) => {
     const normalizedName = appName.toLowerCase().trim()
-    
-    const isWindows = process.platform === 'win32'
-    const isLinux = process.platform === 'linux'
-    const isMac = process.platform === 'darwin'
-    
+    const platform = process.platform
+    const isWindows = platform === 'win32'
+    const isLinux = platform === 'linux'
+    const isMac = platform === 'darwin'
+
     let appMappings = {}
-    
+
     if (isWindows) {
       appMappings = {
         'notepad': 'notepad.exe',
@@ -139,42 +139,37 @@ ipcMain.handle('open-app', async (event, appName) => {
     }
 
     const executable = appMappings[normalizedName]
-    
+    let command = ''
+
     if (executable) {
-      let command
       if (isWindows) {
-        command = `start ${executable}`
+        // Windows 'start' requires a dummy title when the executable is quoted
+        command = `start "" "${executable}"`
       } else if (isLinux) {
         command = `${executable} &`
       } else if (isMac) {
         command = executable
       }
-      
-      exec(command, (error) => {
-        if (error) {
-          resolve({ success: false, error: error.message })
-        } else {
-          resolve({ success: true })
-        }
-      })
     } else {
-      let command
       if (isWindows) {
-        command = `start ${normalizedName}`
+        command = `start "" "${normalizedName}"`
       } else if (isLinux) {
         command = `${normalizedName} &`
       } else if (isMac) {
         command = `open -a "${normalizedName}"`
       }
-      
-      exec(command, (error) => {
-        if (error) {
-          resolve({ success: false, error: `App "${appName}" niet gevonden` })
-        } else {
-          resolve({ success: true })
-        }
-      })
     }
+
+    exec(command, (error) => {
+      if (error) {
+        const msg = executable
+          ? error.message
+          : `App "${appName}" niet gevonden`
+        resolve({ success: false, error: msg })
+      } else {
+        resolve({ success: true })
+      }
+    })
   })
 })
 
@@ -188,7 +183,6 @@ ipcMain.handle('show-error-dialog', async (event, message, heardText) => {
     defaultId: 0,
     cancelId: 1
   })
-  
+
   return result.response === 0
 })
-
